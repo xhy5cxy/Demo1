@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+spring:
+  # 生产环境数据源配置
+  datasource:
+    druid:
+      url: jdbc:mysql://your-prod-db-host:3306/etour_prod?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      username: ${DB_USERNAME:etour_user}
+      password: ${DB_PASSWORD:your_secure_password}
+      initial-size: 20
+      max-active: 200
+      min-idle: 20
+      max-wait: 60000
+
+  # 生产环境Redis配置
+  redis:
+    host: ${REDIS_HOST:your-redis-host}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:your_redis_password}
+    database: 0
+
+# 生产环境日志配置
+logging:
+  level:
+    com.etour: info
+    org.springframework.security: warn
+    org.mybatis: warn
+  file:
+    name: /var/log/etour/etour.log
+
+# 生产环境安全配置
+security:
+  jwt:
+    secret: ${JWT_SECRET:your_production_jwt_secret_key}
+    expiration: 86400000

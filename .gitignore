@@ -1,0 +1,96 @@
+# ============================================
+# E-Tour .gitignore 文件
+# ============================================
+
+# ============================================
+# 私人配置文件
+# ============================================
+.env
+.env.local
+.env.*.local
+
+# ============================================
+# Android端忽略文件
+# ============================================
+e-tour/.idea/
+e-tour/.gradle/
+e-tour/local.properties
+e-tour/gradle.properties
+e-tour/gradlew
+e-tour/gradlew.bat
+e-tour/app/build/
+e-tour/build/
+e-tour/*.iml
+e-tour/spotless.gradle
+e-tour/spotless.gradle.kts
+
+# ============================================
+# 后端忽略文件 (Spring Boot)
+# ============================================
+etour/.idea/
+etour/build/
+etour/target/
+etour/.gradle/
+etour/gradlew
+etour/gradlew.bat
+etour/gradle.properties
+etour/logs/
+etour/uploads/
+etour/*.iml
+etour/out/
+
+# ============================================
+# 前端忽略文件 (Vue.js)
+# ============================================
+admin-web/node_modules/
+admin-web/dist/
+admin-web/.env
+admin-web/.env.local
+admin-web/.npmrc
+admin-web/package-lock.json
+admin-web/yarn.lock
+admin-web/.idea/
+admin-web/.vscode/
+admin-web/*.log
+
+# ============================================
+# 通用忽略文件
+# ============================================
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ============================================
+# 数据库备份文件
+# ============================================
+*.sql
+*.sql.gz
+*.sql.bak
+*_backup_*.sql
+
+# 保留docs目录下的数据库文件
+!docs/database/*.sql
+
+# ============================================
+# IDE配置文件
+# ============================================
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# ============================================
+# 构建产物
+# ============================================
+build/
+target/
+dist/
+out/

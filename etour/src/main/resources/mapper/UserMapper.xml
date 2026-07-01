@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etour.mapper.UserMapper">
+
+    <!-- 根据用户名查找用户 -->
+    <select id="findByUsername" resultType="com.etour.entity.User">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+
+    <!-- 查询用户列表（支持条件查询和分页） -->
+    <select id="selectUserList" resultType="com.etour.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="params.username != null and params.username != ''">
+                AND username LIKE #{params.username}
+            </if>
+            <if test="params.nickname != null and params.nickname != ''">
+                AND nickname LIKE #{params.nickname}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                AND email LIKE #{params.email}
+            </if>
+            <if test="params.phone != null and params.phone != ''">
+                AND phone LIKE #{params.phone}
+            </if>
+            <if test="params.status != null">
+                AND status = #{params.status}
+            </if>
+            <if test="params.userType != null">
+                AND user_type = #{params.userType}
+            </if>
+        </where>
+        ORDER BY ${params.sortField} ${params.sortOrder}
+        LIMIT #{params.offset}, #{params.size}
+    </select>
+
+    <!-- 查询用户总数（支持条件查询） -->
+    <select id="selectUserCount" resultType="long">
+        SELECT COUNT(*) FROM user
+        <where>
+            <if test="params.username != null and params.username != ''">
+                AND username LIKE #{params.username}
+            </if>
+            <if test="params.nickname != null and params.nickname != ''">
+                AND nickname LIKE #{params.nickname}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                AND email LIKE #{params.email}
+            </if>
+            <if test="params.phone != null and params.phone != ''">
+                AND phone LIKE #{params.phone}
+            </if>
+            <if test="params.status != null">
+                AND status = #{params.status}
+            </if>
+            <if test="params.userType != null">
+                AND user_type = #{params.userType}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据状态统计用户数量 -->
+    <select id="selectCountByStatus" resultType="long">
+        SELECT COUNT(*) FROM user WHERE status = #{status}
+    </select>
+
+    <!-- 根据用户类型统计用户数量 -->
+    <select id="selectCountByUserType" resultType="long">
+        SELECT COUNT(*) FROM user WHERE user_type = #{userType}
+    </select>
+
+    <!-- 批量更新用户状态 -->
+    <update id="batchUpdateStatus">
+        UPDATE user 
+        SET status = #{status}, update_time = #{updateTime}
+        WHERE id IN
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
+
+    <!-- 批量删除用户 -->
+    <delete id="batchDeleteByIds">
+        DELETE FROM user WHERE id IN
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+</mapper>

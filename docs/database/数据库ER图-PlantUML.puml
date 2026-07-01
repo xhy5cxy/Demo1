@@ -1,0 +1,205 @@
+@startuml E-Tour数据库ER图
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+
+hide methods
+hide stereotypes
+
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+    FontName "Microsoft YaHei"
+    FontSize 12
+}
+
+skinparam linetype polyline
+
+' ========== 用户相关实体 ==========
+Table(user, "用户表") {
+    + id : bigint <<PK>>
+    + username : varchar(50) <<UK>>
+    + password : varchar(100)
+    + phone : varchar(20)
+    + email : varchar(100)
+    + avatar : varchar(255)
+    + nickname : varchar(50)
+    + intro : text
+    + address : varchar(255)
+    + create_time : datetime
+    + update_time : datetime
+    + status : tinyint
+    + user_type : tinyint
+}
+
+Table(member, "会员表") {
+    + id : bigint <<PK>>
+    + user_id : bigint <<FK>>
+    + level : tinyint
+    + start_time : datetime
+    + end_time : datetime
+    + create_time : datetime
+    + update_time : datetime
+}
+
+Table(user_preference, "用户偏好表") {
+    + id : bigint <<PK>>
+    + user_id : bigint <<FK>>
+    + prefer_type : varchar(50)
+    + prefer_value : varchar(100)
+    + weight : decimal(3,2)
+    + update_time : datetime
+}
+
+Table(order, "订单表") {
+    + id : bigint <<PK>>
+    + order_no : varchar(50) <<UK>>
+    + user_id : bigint <<FK>>
+    + amount : decimal(10,2)
+    + pay_type : tinyint
+    + status : tinyint
+    + pay_time : datetime
+    + expire_time : datetime
+    + create_time : datetime
+    + update_time : datetime
+}
+
+' ========== 景点相关实体 ==========
+Table(spot, "景点表") {
+    + id : bigint <<PK>>
+    + name : varchar(100)
+    + city : varchar(50)
+    + address : varchar(255)
+    + latitude : decimal(10,6)
+    + longitude : decimal(10,6)
+    + intro : text
+    + open_time : varchar(100)
+    + ticket_price : decimal(10,2)
+    + rating : decimal(2,1)
+    + create_time : datetime
+    + update_time : datetime
+}
+
+' ========== 攻略相关实体 ==========
+Table(strategy, "攻略表") {
+    + id : bigint <<PK>>
+    + user_id : bigint <<FK>>
+    + title : varchar(100)
+    + content : longtext
+    + destination : varchar(50)
+    + cover_image : varchar(255)
+    + view_count : int
+    + like_count : int
+    + collect_count : int
+    + status : tinyint
+    + create_time : datetime
+    + update_time : datetime
+}
+
+Table(strategy_tag, "攻略标签表") {
+    + id : bigint <<PK>>
+    + name : varchar(30) <<UK>>
+    + create_time : datetime
+}
+
+Table(strategy_tag_relation, "攻略-标签关联表") {
+    + id : bigint <<PK>>
+    + strategy_id : bigint <<FK>>
+    + tag_id : bigint <<FK>>
+}
+
+Table(strategy_reject_reason, "攻略驳回原因表") {
+    + id : bigint <<PK>>
+    + strategy_id : bigint <<FK>>
+    + reason : text
+    + create_time : datetime
+}
+
+Table(comment, "评论表") {
+    + id : bigint <<PK>>
+    + strategy_id : bigint <<FK>>
+    + user_id : bigint <<FK>>
+    + content : text
+    + parent_id : bigint
+    + create_time : datetime
+    + update_time : datetime
+    + like_count : int
+    + status : tinyint
+}
+
+Table(collect, "收藏表") {
+    + id : bigint <<PK>>
+    + user_id : bigint <<FK>>
+    + strategy_id : bigint <<FK>>
+    + create_time : datetime
+}
+
+' ========== 行程相关实体 ==========
+Table(trip, "行程表") {
+    + id : bigint <<PK>>
+    + user_id : bigint <<FK>>
+    + title : varchar(100)
+    + destination : varchar(50)
+    + start_date : date
+    + end_date : date
+    + days : int
+    + description : text
+    + is_optimized : tinyint
+    + status : tinyint
+    + create_time : datetime
+    + update_time : datetime
+}
+
+Table(trip_spot, "行程-景点关联表") {
+    + id : bigint <<PK>>
+    + trip_id : bigint <<FK>>
+    + spot_id : bigint <<FK>>
+    + day : int
+    + sort : int
+    + visit_time : varchar(50)
+    + notes : text
+}
+
+' ========== 通用标签实体 ==========
+Table(tags, "通用标签表") {
+    + id : bigint <<PK>>
+    + name : varchar(50) <<UK>>
+    + type : varchar(20)
+    + description : varchar(200)
+    + color : varchar(7)
+    + sort_order : int
+    + status : tinyint
+    + create_time : datetime
+    + update_time : datetime
+}
+
+' ========== 关系定义 ==========
+
+' 用户模块关系
+user ||--o{ member : "拥有"
+user ||--o{ user_preference : "设置"
+user ||--o{ order : "创建"
+user ||--o{ strategy : "发布"
+user ||--o{ comment : "发表"
+user ||--o{ collect : "收藏"
+user ||--o{ trip : "创建"
+
+' 攻略模块关系
+strategy ||--o{ strategy_tag_relation : "关联"
+strategy_tag ||--o{ strategy_tag_relation : "被关联"
+strategy ||--o{ strategy_reject_reason : "驳回"
+strategy ||--o{ comment : "被评论"
+strategy ||--o{ collect : "被收藏"
+
+' 行程模块关系
+trip ||--o{ trip_spot : "包含"
+spot ||--o{ trip_spot : "被包含"
+
+' 其他关系
+order ||--|| user : "属于"
+comment ||--|| user : "由用户发表"
+comment ||--|| strategy : "评论攻略"
+collect ||--|| user : "用户收藏"
+collect ||--|| strategy : "收藏攻略"
+
+@enduml

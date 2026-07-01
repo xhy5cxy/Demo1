@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Tour 数据库表结构图表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .module {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .module-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: white;
+        }
+        
+        .module-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .module-count {
+            margin-left: auto;
+            background: #ecf0f1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .tables {
+            padding: 0;
+        }
+        
+        .table {
+            padding: 20px;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        
+        .table:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .table:last-child {
+            border-bottom: none;
+        }
+        
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .table-name {
+            font-weight: 600;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+        
+        .table-chinese {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        .table-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat {
+            background: #ecf0f1;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+        
+        .fields {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .field-type {
+            background: #3498db;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .field-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .field-comment {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            flex: 1;
+        }
+        
+        .pk {
+            background: #e74c3c !important;
+        }
+        
+        .fk {
+            background: #f39c12 !important;
+        }
+        
+        .uk {
+            background: #27ae60 !important;
+        }
+        
+        .relationships {
+            background: #f8f9fa;
+            padding: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .relationships h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+        
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .relationship {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .relationship-title {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .relationship-items {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .relationship-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            font-size: 0.9em;
+        }
+        
+        .relationship-arrow {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        @media (max-width: 768px) {
+            .modules {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .stat-item {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>E-Tour 智能旅游攻略系统</h1>
+            <div class="subtitle">数据库表结构可视化图表</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">数据表</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">功能模块</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">关系类型</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8</span>
+                    <span class="stat-label">预置标签</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modules">
+            <!-- 用户管理模块 -->
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #e74c3c;">👥</div>
+                    <div class="module-title">用户管理模块</div>
+                    <div class="module-count">4个表</div>
+                </div>
+                <div class="tables">
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">user</span>
+                                <span class="table-chinese">用户表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">14字段</span>
+                                <span class="stat">1记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">用户ID（主键）</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type uk">UK</span>
+                                <span class="field-name">username</span>
+                                <span class="field-comment">用户名</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">password</span>
+                                <span class="field-comment">加密密码</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">avatar</span>
+                                <span class="field-comment">头像URL</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">member</span>
+                                <span class="table-chinese">会员表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">7字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">会员ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">tinyint</span>
+                                <span class="field-name">level</span>
+                                <span class="field-comment">会员等级</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">order</span>
+                                <span class="table-chinese">订单表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">11字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">订单ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type uk">UK</span>
+                                <span class="field-name">order_no</span>
+                                <span class="field-comment">订单编号</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">user_preference</span>
+                                <span class="table-chinese">用户偏好表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">4字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">偏好ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">prefer_type</span>
+                                <span class="field-comment">偏好类型</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 攻略管理模块 -->
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #3498db;">📝</div>
+                    <div class="module-title">攻略管理模块</div>
+                    <div class="module-count">6个表</div>
+                </div>
+                <div class="tables">
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">strategy</span>
+                                <span class="table-chinese">攻略表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">13字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">攻略ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">title</span>
+                                <span class="field-comment">攻略标题</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">longtext</span>
+                                <span class="field-name">content</span>
+                                <span class="field-comment">攻略内容</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">strategy_tag</span>
+                                <span class="table-chinese">攻略标签表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">3字段</span>
+                                <span class="stat">8记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">标签ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type uk">UK</span>
+                                <span class="field-name">name</span>
+                                <span class="field-comment">标签名称</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">strategy_tag_relation</span>
+                                <span class="table-chinese">标签关联表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">3字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">关联ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">strategy_id</span>
+                                <span class="field-comment">攻略ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">tag_id</span>
+                                <span class="field-comment">标签ID</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">comment</span>
+                                <span class="table-chinese">评论表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">9字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">评论ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">strategy_id</span>
+                                <span class="field-comment">攻略ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">collect</span>
+                                <span class="table-chinese">收藏表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">4字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">收藏ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">strategy_id</span>
+                                <span class="field-comment">攻略ID</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">strategy_reject_reason</span>
+                                <span class="table-chinese">驳回原因表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">4字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">记录ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">strategy_id</span>
+                                <span class="field-comment">攻略ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">text</span>
+                                <span class="field-name">reason</span>
+                                <span class="field-comment">驳回原因</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 行程管理模块 -->
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #27ae60;">🗺️</div>
+                    <div class="module-title">行程管理模块</div>
+                    <div class="module-count">3个表</div>
+                </div>
+                <div class="tables">
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">trip</span>
+                                <span class="table-chinese">行程表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">12字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">行程ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">user_id</span>
+                                <span class="field-comment">用户ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">title</span>
+                                <span class="field-comment">行程标题</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">destination</span>
+                                <span class="field-comment">目的地</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">spot</span>
+                                <span class="table-chinese">景点表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">12字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">景点ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">name</span>
+                                <span class="field-comment">景点名称</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">city</span>
+                                <span class="field-comment">所在城市</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">decimal</span>
+                                <span class="field-name">latitude</span>
+                                <span class="field-comment">纬度</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">trip_spot</span>
+                                <span class="table-chinese">行程景点关联表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">7字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">关联ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">trip_id</span>
+                                <span class="field-comment">行程ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type fk">FK</span>
+                                <span class="field-name">spot_id</span>
+                                <span class="field-comment">景点ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">int</span>
+                                <span class="field-name">day</span>
+                                <span class="field-comment">行程天数</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 基础数据模块 -->
+            <div class="module">
+                <div class="module-header">
+                    <div class="module-icon" style="background: #9b59b6;">🏷️</div>
+                    <div class="module-title">基础数据模块</div>
+                    <div class="module-count">1个表</div>
+                </div>
+                <div class="tables">
+                    <div class="table">
+                        <div class="table-header">
+                            <div>
+                                <span class="table-name">tags</span>
+                                <span class="table-chinese">通用标签表</span>
+                            </div>
+                            <div class="table-stats">
+                                <span class="stat">9字段</span>
+                                <span class="stat">0记录</span>
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <span class="field-type pk">PK</span>
+                                <span class="field-name">id</span>
+                                <span class="field-comment">标签ID</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type uk">UK</span>
+                                <span class="field-name">name</span>
+                                <span class="field-comment">标签名称</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">type</span>
+                                <span class="field-comment">标签类型</span>
+                            </div>
+                            <div class="field">
+                                <span class="field-type">varchar</span>
+                                <span class="field-name">description</span>
+                                <span class="field-comment">标签描述</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="relationships">
+            <h3>🔗 核心实体关系</h3>
+            <div class="relationship-grid">
+                <div class="relationship">
+                    <div class="relationship-title">
+                        <span style="color: #e74c3c;">●</span> 用户模块 (1:1, 1:N)
+                    </div>
+                    <div class="relationship-items">
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:1──</span>
+                            <span>member</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>user_preference</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>order</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>strategy</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>comment</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>collect</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>user</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>trip</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relationship">
+                    <div class="relationship-title">
+                        <span style="color: #3498db;">●</span> 攻略模块 (N:M)
+                    </div>
+                    <div class="relationship-items">
+                        <div class="relationship-item">
+                            <span>strategy</span>
+                            <span class="relationship-arrow">──N:M──</span>
+                            <span>strategy_tag</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>strategy</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>comment</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>strategy</span>
+                            <span class="relationship-arrow">──1:N──</span>
+                            <span>collect</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>strategy</span>
+                            <span class="relationship-arrow">──1:1──</span>
+                            <span>strategy_reject_reason</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relationship">
+                    <div class="relationship-title">
+                        <span style="color: #27ae60;">●</span> 行程模块 (N:M)
+                    </div>
+                    <div class="relationship-items">
+                        <div class="relationship-item">
+                            <span>trip</span>
+                            <span class="relationship-arrow">──N:M──</span>
+                            <span>spot</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>trip_spot</span>
+                            <span class="relationship-arrow">──关联表──</span>
+                            <span>行程-景点</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relationship">
+                    <div class="relationship-title">
+                        <span style="color: #9b59b6;">●</span> 标签系统
+                    </div>
+                    <div class="relationship-items">
+                        <div class="relationship-item">
+                            <span>strategy_tag</span>
+                            <span class="relationship-arrow">──预置──</span>
+                            <span>8个标签</span>
+                        </div>
+                        <div class="relationship-item">
+                            <span>tags</span>
+                            <span class="relationship-arrow">──通用──</span>
+                            <span>多类型标签</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📊 数据统计：14个数据表 | 4个功能模块 | 8个预置标签 | 支持AI智能推荐</p>
+            <p>🔄 最后更新：2024年 | 基于 E-Tour 智能旅游攻略系统数据库设计</p>
+        </div>
+    </div>
+    
+    <script>
+        // 添加交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 表格点击展开/收起功能
+            const tables = document.querySelectorAll('.table');
+            tables.forEach(table => {
+                const fields = table.querySelector('.fields');
+                const header = table.querySelector('.table-header');
+                
+                // 默认显示前4个字段
+                const allFields = fields.querySelectorAll('.field');
+                if (allFields.length > 4) {
+                    for (let i = 4; i < allFields.length; i++) {
+                        allFields[i].style.display = 'none';
+                    }
+                    
+                    // 添加展开/收起按钮
+                    const toggleBtn = document.createElement('span');
+                    toggleBtn.className = 'stat';
+                    toggleBtn.style.cursor = 'pointer';
+                    toggleBtn.style.marginLeft = '10px';
+                    toggleBtn.textContent = '展开';
+                    toggleBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        const isExpanded = toggleBtn.textContent === '收起';
+                        
+                        for (let i = 4; i < allFields.length; i++) {
+                            allFields[i].style.display = isExpanded ? 'none' : 'flex';
+                        }
+                        
+                        toggleBtn.textContent = isExpanded ? '展开' : '收起';
+                    };
+                    
+                    header.appendChild(toggleBtn);
+                }
+            });
+            
+            // 模块悬浮效果增强
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(module => {
+                module.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                    this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+                });
+                
+                module.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.08)';
+                });
+            });
+            
+            // 统计数字动画
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const targetNumber = parseInt(stat.textContent);
+                let currentNumber = 0;
+                const increment = targetNumber / 50;
+                
+                const timer = setInterval(() => {
+                    currentNumber += increment;
+                    if (currentNumber >= targetNumber) {
+                        stat.textContent = targetNumber;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(currentNumber);
+                    }
+                }, 30);
+            });
+        });
+    </script>
+</body>
+</html>
