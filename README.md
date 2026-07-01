@@ -233,9 +233,8 @@ npm run build
 
 ## 📮 联系方式
 
-- **项目主页**: <https://github.com/your-username/e-tour>
-- **问题反馈**: <https://github.com/your-username/e-tour/issues>
-- **开发者**: your-name
+- **问题反馈**:2718336395\@qq.com
+- **开发者**: 小徐呀
 
 ***
 
