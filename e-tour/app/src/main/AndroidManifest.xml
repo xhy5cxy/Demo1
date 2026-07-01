@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 高德地图所需权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    
+    <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    
+    <!-- 头像上传所需权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Tourapp"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="31">
+        
+        <!-- FileProvider配置 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        
+        <!-- 高德地图API Key配置 -->
+        <!-- 请将YOUR_API_KEY_HERE替换为从高德开放平台获取的实际API Key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="@string/amap_api_key" />
+            
+        <!-- 高德地图服务配置 -->
+        <service android:name="com.amap.api.location.APSService" />
+        <activity
+            android:name=".auth.ui.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.ui.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".me.MyselfActivity"
+            android:exported="false" />
+        <activity
+            android:name=".community.ui.CommunityActivity"
+            android:exported="true" />
+        <activity
+            android:name=".payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trip.TripActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ai.AImainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity
+            android:name=".TestConnectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ai.test.ModelScopeTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".strategy.CreateStrategyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".strategy.ui.StrategyDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".createtrip.CreateTripActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".auth.ui.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".auth.ui.AuthTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".test.StrategyTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".me.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ui.AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".navigation.NavigationActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

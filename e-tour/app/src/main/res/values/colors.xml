@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- 旅游应用主题色 -->
+    <color name="primary_blue">#2196F3</color>
+    <color name="primary_blue_dark">#1976D2</color>
+    <color name="accent_color">#4FC3F7</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="background">#FAFAFA</color>
+    
+    <!-- 新增颜色 -->
+    <color name="color_primary">#2196F3</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="comment_bg">#F5F5F5</color>
+    <color name="comment_input_bg">#FFFFFF</color>
+</resources>

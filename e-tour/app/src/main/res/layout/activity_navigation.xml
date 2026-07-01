@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!-- 主要内容区域 -->
+    <ScrollView
+        android:id="@+id/content_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="智能导航"
+            android:textSize="24sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 当前位置信息 -->
+        <LinearLayout
+            android:id="@+id/ll_location_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="当前位置信息"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tv_current_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="正在获取位置..."
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btn_get_current_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="刷新位置"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_primary"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+        </LinearLayout>
+
+        <!-- 目的地输入 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="目的地"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入目的地名称或地址"
+                android:textSize="14sp"
+                android:padding="12dp"
+                android:background="@drawable/edit_text_bg"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 热门目的地快捷按钮 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="热门目的地"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_quick_destinations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+                <!-- 热门目的地按钮将通过代码动态添加 -->
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 导航模式选择 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="导航模式"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <RadioGroup
+                android:id="@+id/rg_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_drive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="驾车"
+                    android:textSize="14sp"
+                    android:checked="true"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioButton
+                    android:id="@+id/rb_bus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="公交"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioButton
+                    android:id="@+id/rb_walk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="步行"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <RadioButton
+                    android:id="@+id/rb_bike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="骑行"
+                    android:textSize="14sp" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- 开始导航按钮 -->
+        <Button
+            android:id="@+id/btn_start_navigate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开始导航"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_primary"
+            android:paddingVertical="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 提示信息 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提示：导航功能需要高德地图App支持。如果未安装高德地图，将自动使用网页版导航。"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:lineSpacingExtra="4dp"
+            android:gravity="center" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 底部导航栏 -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 旅行之路按钮 -->
+        <LinearLayout
+            android:id="@+id/btn_travel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iv_travel"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_travel"/>
+
+            <TextView
+                android:id="@+id/tv_travel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="旅行之路"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 攻略广场按钮 -->
+        <LinearLayout
+            android:id="@+id/btn_explore"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iv_explore"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_explore"/>
+
+            <TextView
+                android:id="@+id/tv_explore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="攻略广场"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 中间圆形加号按钮 -->
+        <FrameLayout
+            android:id="@+id/btn_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/circle_add_background"
+                android:elevation="4dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="#FFFFFF"/>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- AI助手按钮 -->
+        <LinearLayout
+            android:id="@+id/btn_ai"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iv_ai"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_ai"/>
+
+            <TextView
+                android:id="@+id/tv_ai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI助手"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <!-- 我的按钮 -->
+        <LinearLayout
+            android:id="@+id/btn_me"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/iv_me"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_me"/>
+
+            <TextView
+                android:id="@+id/tv_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的"
+                android:textColor="#B0B0B0"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

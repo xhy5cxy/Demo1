@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 仅调试环境：允许明文 HTTP 到本机后端（10.0.2.2） -->
+    <base-config cleartextTrafficPermitted="true" />
+    <!-- 如需更细粒度控制，可改为：
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+    -->
+</network-security-config>
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_menu_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_admin_menu_item"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- 图标区域 -->
+    <ImageView
+        android:id="@+id/iv_menu_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_user_management"
+        android:scaleType="centerInside"
+        android:background="@drawable/bg_menu_icon"
+        android:layout_marginEnd="16dp" />
+
+    <!-- 文本区域 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_menu_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户管理"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_menu_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="管理用户账号和权限"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- 箭头图标 -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_right"
+        android:scaleType="centerInside"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>

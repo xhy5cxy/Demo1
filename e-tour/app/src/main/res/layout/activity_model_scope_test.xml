@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="阿里ModelScope接口测试"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- API-KEY输入框 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="API-KEY配置（可选）"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/et_api_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入您的ModelScope API-KEY（如已配置在strings.xml中可留空）"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 测试消息输入框 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试消息"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/et_test_message"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="请输入要发送给AI的消息"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/btn_test_connection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="测试连接"
+                android:layout_marginEnd="8dp"
+                android:background="@color/design_default_color_primary"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_send_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="发送消息"
+                android:layout_marginStart="8dp"
+                android:background="@color/design_default_color_primary_dark"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <!-- 结果显示区域 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试结果"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:color/darker_gray"
+            android:text="请点击上方按钮开始测试"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:scrollbars="vertical" />
+
+        <!-- 使用说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="使用说明"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 确保已在strings.xml中配置modelscope_api_key\n2. 点击'测试连接'验证API连接\n3. 输入消息后点击'发送消息'测试AI回复功能\n4. 如果连接失败，请检查API-KEY配置和网络连接"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:background="@android:color/background_light"
+            android:padding="12dp" />
+
+    </LinearLayout>
+
+</ScrollView>

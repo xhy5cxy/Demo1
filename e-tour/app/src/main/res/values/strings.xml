@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Tourapp</string>
+    
+    <!-- ModelScope API配置 -->
+    <!-- 注意：实际API Key应存储在.env文件中，此处为占位符 -->
+    <string name="modelscope_api_key">YOUR_MODELSCOPE_API_KEY_HERE</string>
+    <string name="modelscope_api_url">https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions</string>
+    <string name="modelscope_model">qwen-turbo</string>
+    
+    <!-- 本地AI服务配置 -->
+    <string name="local_ai_service_url">http://localhost:8080</string>
+    
+    <!-- 高德地图导航配置 -->
+    <!-- 注意：实际API Key应存储在.env文件中，此处为占位符 -->
+    <string name="amap_api_key">YOUR_AMAP_API_KEY_HERE</string>
+    
+    <!-- 导航功能字符串 -->
+    <string name="navigation_current_location">当前位置</string>
+    <string name="navigation_destination">目的地</string>
+    <string name="navigation_start_navigation">开始导航</string>
+    <string name="navigation_refresh_location">刷新位置</string>
+    <string name="navigation_driving">驾车</string>
+    <string name="navigation_bus">公交</string>
+    <string name="navigation_walking">步行</string>
+    <string name="navigation_biking">骑行</string>
+    <string name="navigation_permission_denied">定位权限被拒绝，无法使用导航功能</string>
+    <string name="navigation_location_error">获取位置失败，请检查定位服务</string>
+    <string name="navigation_amap_not_installed">未安装高德地图，将使用网页版导航</string>
+    
+    <!-- 热门目的地 -->
+    <string name="destination_tiananmen">天安门广场</string>
+    <string name="destination_forbidden_city">故宫博物院</string>
+    <string name="destination_summer_palace">颐和园</string>
+    <string name="destination_great_wall">八达岭长城</string>
+    <string name="destination_bird_nest">鸟巢</string>
+</resources>
