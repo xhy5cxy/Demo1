@@ -12,32 +12,32 @@
 # ============================================
 # Android端忽略文件
 # ============================================
-e-tour/.idea/
-e-tour/.gradle/
-e-tour/local.properties
-e-tour/gradle.properties
-e-tour/gradlew
-e-tour/gradlew.bat
-e-tour/app/build/
-e-tour/build/
-e-tour/*.iml
-e-tour/spotless.gradle
-e-tour/spotless.gradle.kts
+android-client/.idea/
+android-client/.gradle/
+android-client/local.properties
+android-client/gradle.properties
+android-client/gradlew
+android-client/gradlew.bat
+android-client/app/build/
+android-client/build/
+android-client/*.iml
+android-client/spotless.gradle
+android-client/spotless.gradle.kts
 
 # ============================================
 # 后端忽略文件 (Spring Boot)
 # ============================================
-etour/.idea/
-etour/build/
-etour/target/
-etour/.gradle/
-etour/gradlew
-etour/gradlew.bat
-etour/gradle.properties
-etour/logs/
-etour/uploads/
-etour/*.iml
-etour/out/
+etour-server/.idea/
+etour-server/build/
+etour-server/target/
+etour-server/.gradle/
+etour-server/gradlew
+etour-server/gradlew.bat
+etour-server/gradle.properties
+etour-server/logs/
+etour-server/uploads/
+etour-server/*.iml
+etour-server/out/
 
 # ============================================
 # 前端忽略文件 (Vue.js)
@@ -74,6 +74,9 @@ Thumbs.db
 
 # 保留docs目录下的数据库文件
 !docs/database/*.sql
+
+# Android签名密钥
+android-client/my-release-key.keystore
 
 # ============================================
 # IDE配置文件

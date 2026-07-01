@@ -69,6 +69,7 @@
 ```
 E-Tour/
 ├── admin-web/          # 前端管理后台 (Vue.js)
+├── android-client/     # Android移动端应用
 ├── docs/               # 项目文档
 │   ├── project/        # 项目概述
 │   ├── architecture/   # 架构设计
@@ -77,8 +78,7 @@ E-Tour/
 │   ├── features/       # 功能说明
 │   ├── troubleshooting/# 故障排查
 │   └── database/       # 数据库文件
-├── e-tour/             # Android移动端应用
-└── etour/              # 后端服务 (Spring Boot)
+└── etour-server/       # 后端服务 (Spring Boot)
 ```
 
 ## 🚀 快速开始
