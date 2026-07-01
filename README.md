@@ -114,7 +114,7 @@ source docs/database/etour.sql;
 ### 3. 运行后端服务
 
 ```bash
-cd etour
+cd etour-server
 
 # 使用Maven构建
 mvn clean package -DskipTests
